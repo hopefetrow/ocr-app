@@ -1,6 +1,7 @@
 """
 This program is to see how OCR works by implementing basic 
 program
+Courtesy: https://www.youtube.com/watch?v=ZVKaWPW9oQY
 
 """
 
