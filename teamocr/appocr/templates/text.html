@@ -3,15 +3,73 @@
 {% comment %} Do not touch, BOMB disposal unit working on it {% endcomment %}
 {% block content %}
 
+
     <form method="post" enctype="multipart/form-data">
+
         {% csrf_token %}
-        <label class="form-label" for="customFile">Upload the Image</label>
-        <input type="file" class="form-control" id="image" name="image" />
-        <button class="button-primary" type="submit">Start OCR</button>
+
+        <h4 class="text-center">Upload the Image</h4>
+        <input type="file" class="form-control" id="image" name="image" style="border:1px outset #000000;"/>
+
+        {% comment %} for line break before the submit {% endcomment %}
+        <br><br>
+
+        {% comment %} for the submit form {% endcomment %}
+        <div class="text-center">
+             <button type="submit" class="btn btn-primary btn-lg btn-block" type="submit">Start OCR</button>
+        </div>
+        {% comment %} End of submit form {% endcomment %}
+
     </form>
 
     {% comment %} For output {% endcomment %}
-    <div style="min-width: 100%; min-height: 100%; border: 1em;">
-        <p> {{ text }} </p>
+    <br><br>
+
+    <div class="row">
+        {% comment %} From views.py {% endcomment %}
+        <textarea class="form-control rounded-0" id="text-val" rows="20" cols="10" style="border:1px outset #000000;">
+            {{ text }}
+        </textarea>  
+         {% comment %} End of the output {% endcomment %}
     </div>
+    
+    {% comment %} Line Break before Download {% endcomment %}
+    <br>
+    <br> 
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary btn-lg" id="dwn-btn">Download .txt File</button>
+    </div>
+
+    {% comment %} End of the html file {% endcomment %}
+
+{% comment %} Javascript for document saver {% endcomment %}
+<script>
+
+    function download(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+    }
+
+    // Start file download.
+        document.getElementById("dwn-btn").addEventListener("click", function() {
+    // Generate download of hello.txt file with some content
+        var text = document.getElementById("text-val").value;
+        var filename = "4O4CR.txt";
+
+        download(filename, text);
+    }, false);
+
+
+</script>
 {% endblock %}
+
+{% comment %} End of the document {% endcomment %}
