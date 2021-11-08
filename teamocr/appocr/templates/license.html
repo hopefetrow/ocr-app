@@ -2,15 +2,23 @@
 
 {% block content %}
 
+<label class="form-label" for="customFile">Upload the Image</label>
+<input type="file" class="form-control" id="customFile" />
+<br><br>
+
+<h3 style="text-align:center"> Or fill out manually </h3>
+
+<br><br>
+
 <form method="post" action="{% url 'license' %}">
   <div class="form-row">
     <div class="form-group col-md-6">
-      <label for="inputEmail4">Email</label>
-      <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+      <label for="inputEmail4">First Name</label>
+      <input type="email" class="form-control" id="inputEmail4" placeholder="First Name">
     </div>
     <div class="form-group col-md-6">
-      <label for="inputPassword4">Password</label>
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+      <label for="inputPassword4">Last Name</label>
+      <input type="password" class="form-control" id="inputPassword4" placeholder="Last Name">
     </div>
   </div>
   <div class="form-group">
@@ -49,4 +57,14 @@
   <button type="submit" class="btn btn-primary">Sign in</button>
 </form>
 
+{% for x in text %}
+    <h3>{{ x }}</h3>
+{% endfor %}
+<!-- Don't care -->
+<!-- <h1> Output </h1>
+
+{% for items in test %}
+    <h3>{{ items }}</h3>
+{% endfor %} -->
+<!-- End of Don't care -->
 {% endblock %}

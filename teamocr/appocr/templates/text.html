@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% comment %} Do not touch, BOMB disposal unit working on it {% endcomment %}
+{% block content %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label class="form-label" for="customFile">Upload the Image</label>
+        <input type="file" class="form-control" id="image" name="image" />
+        <button class="button-primary" type="submit">Start OCR</button>
+    </form>
+
+    {% comment %} For output {% endcomment %}
+    <div style="min-width: 100%; min-height: 100%; border: 1em;">
+        <p> {{ text }} </p>
+    </div>
+{% endblock %}
