@@ -8,7 +8,10 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>CS58204O4CR</title>
+    {% comment %} <title>CS58204O4CR</title> {% endcomment %}
+    <title>
+        {% block title %}{% endblock %}
+    </title>
   </head>
   <body>
   <br>

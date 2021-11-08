@@ -25,22 +25,27 @@ def home(request):
 # This function may explode, DO NOT TOUCH!!
 def textConversions(request):
     text = ""
+    context = dict()
     if request.method == 'POST':
         form = ImageUpload(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            img_obj = form.instance
             image = request.FILES['image']
+            image = form.cleaned_data['image']
             image = image.name 
             path = settings.MEDIA_ROOT 
             pathz = path + '/images/' + image 
-
+        
             text = pytesseract.image_to_string(Image.open(pathz))
             text = text.encode("ascii", "ignore")
             text = text.decode()
 
-    context = {
-        'text': text
-    }   
+            context = {
+                'text': text,
+                'img_obj': img_obj
+            }   
+            return render(request, 'text.html', context)
     return render(request, 'text.html', context)
 # End of the Bomb Explosion
 
@@ -53,27 +58,17 @@ def license(request):
 	# using OpenCV
 	    return "".join([c if ord(c) < 128 else "" for c in text]).strip()
 
-    image = cv2.imread("../license_2.jpg")
+    image = cv2.imread("../license_5.jpg")
 
     reader = Reader(['en'], gpu=True)
     results = reader.readtext(image)
         
         # loop over the results
 
-        
+    # The text1 is a empty list which will be appended
     text1 = list()
     for (bbox, text, prob) in results:
         clean_txt = cleanup_text(text)
         text1.append(clean_txt)
-        # print(clean_txt)
-        
-        # return render(request, 'license.html', {'text':text1})
+       
     return render(request, 'license.html', {'text':text1})
-
-        # cv2.rectangle(image, tl, br, (0, 255, 0), 2)
-        # cv2.putText(image, text, (tl[0], tl[1] - 10),
-        # cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
-
-        # show the output image
-        # cv2.imshow("Image", image)
-        # cv2.waitKey(0)
