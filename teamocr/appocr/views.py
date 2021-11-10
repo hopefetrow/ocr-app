@@ -1,4 +1,11 @@
+"""
+This file is for viewing purposes only.
+Please modify with care.
+
+"""
 from django.shortcuts import render
+from django.conf import settings 
+from .forms import ImageUpload
 
 # for pytesseract import 
 import pytesseract
@@ -10,7 +17,6 @@ import argparse
 import cv2
 
 import os
-from .forms import ImageUpload
 from PIL import Image 
 from django.conf import settings  
 
@@ -30,6 +36,7 @@ def textConversions(request):
         form = ImageUpload(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            # For previewing image 
             img_obj = form.instance
             image = request.FILES['image']
             image = form.cleaned_data['image']
@@ -72,3 +79,8 @@ def license(request):
         text1.append(clean_txt)
        
     return render(request, 'license.html', {'text':text1})
+
+# For testing purposes only
+def test(request):
+    return render(request, 'test.html', {})
+# Please delete the above function for code efficiency and final deployment

@@ -1,16 +1,23 @@
 {% extends 'base.html' %}
 
+{% comment %} 
+1. This page will be used for normal conversion of image to text.
+2. The user will be able to edit the textarea and download in this page.
+{% endcomment %}
+
 {% block title %}ImageToText{% endblock %}
 
 {% comment %} Do not touch, BOMB disposal unit working on it {% endcomment %}
 {% block content %}
 
     <form method="post" enctype="multipart/form-data">
-
+        {% comment %} For Security purpose. Please don't delete {% endcomment %}
         {% csrf_token %}
 
+        {% comment %} For uploading portion {% endcomment %}
         <h4 class="text-center">Upload the Image</h4>
         <input type="file" class="form-control" id="image" name="image" style="border:1px outset #000000;"/>
+        {% comment %} End of uploading portion {% endcomment %}
 
         {% comment %} for line break before the submit {% endcomment %}
         <br><br>
@@ -21,15 +28,18 @@
         </div>
         {% comment %} End of submit form {% endcomment %}
         
-    <br><br>
     </form>
+    {% comment %} Line break before the preview {% endcomment %}
+    <br><br>
 
+    {% comment %} For previewing image {% endcomment %}
     <div class="text-center">
         {% if img_obj %}
             <h3 class="text-center">The image{{img_obj.title}}</h3>
             <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:500px">
         {% endif %}
     </div>
+    {% comment %} End of previewing {% endcomment %}
 
     {% comment %} Line Break {% endcomment %}
     <br>
@@ -37,7 +47,7 @@
     {% comment %} For output {% endcomment %}
     <div class="text-center">
         <h3 class="text-center">The OCR'd version</h3>
-        <br>
+
         {% comment %} From views.py {% endcomment %}
         <textarea class="form-control rounded-0" id="text-val" rows="20" cols="10" style="border:1px outset #000000;">
             {{ text }}
@@ -59,32 +69,35 @@
     {% comment %} End of the html file {% endcomment %}
 
 {% comment %} Javascript for document saver {% endcomment %}
+{% comment %} Please do not change unless you find better solution {% endcomment %}
+{% comment %} Make sure to move the following portion to static/js/main.js file {% endcomment %}
 <script>
 
     function download(filename, text) {
-    var element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
-    element.setAttribute('download', filename);
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
 
-    element.style.display = 'none';
-    document.body.appendChild(element);
+        element.style.display = 'none';
+        document.body.appendChild(element);
 
-    element.click();
+        element.click();
 
-    document.body.removeChild(element);
+        document.body.removeChild(element);
     }
 
     // Start file download.
-        document.getElementById("dwn-btn").addEventListener("click", function() {
+    document.getElementById("dwn-btn").addEventListener("click", function() {
     // Generate download of hello.txt file with some content
-        var text = document.getElementById("text-val").value;
-        var filename = "4O4CR.txt";
+    var text = document.getElementById("text-val").value;
+    // The name of the file. Can be modified by admins
+    var filename = "4O4CR.txt";
 
-        download(filename, text);
+    download(filename, text);
     }, false);
 
-
 </script>
+{% comment %} End of JavaScript {% endcomment %}
 {% endblock %}
 
 {% comment %} End of the document {% endcomment %}
