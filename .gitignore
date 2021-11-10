@@ -1,0 +1,6 @@
+env/bin
+env/lib/python3.9/site-packages
+env/share/doc/networkx-2.6.3
+teamocr/media
+teamocr/appocr/__pycache__
+teamocr/appocr/migrations/__pycache__
