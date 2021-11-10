@@ -4,3 +4,14 @@ env/share/doc/networkx-2.6.3
 teamocr/media
 teamocr/appocr/__pycache__
 teamocr/appocr/migrations/__pycache__
+teamocr/__pycache__/
+appocr/.DS_Store
+.DS_Store
+ ../.DS_Store
+env/lib/python3.9/site-packages/cv2/version.py
+teamocr/teamocr/__pycache__/__init__.cpython-39.pyc
+teamocr/teamocr/__pycache__/settings.cpython-39.pyc
+teamocr/teamocr/__pycache__/urls.cpython-39.pyc
+teamocr/teamocr/__pycache__/wsgi.cpython-39.pyc
+env/lib/python3.9/site-packages/cv2/__init__.py
+env/lib/python3.9/site-packages/cv2/version.py
