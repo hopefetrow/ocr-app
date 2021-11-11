@@ -6,6 +6,8 @@ urlpatterns = [
     path('', views.home, name="home"),
     path('text/', views.textConversions, name="text"),
     path('license/', views.license, name='license'),
+    # Page that reads check number 
+    path('check/', views.check, name='check'),
 
     # For testing purpose only 
     path('test/', views.test, name="test"),

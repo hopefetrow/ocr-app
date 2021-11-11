@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% comment %} 
+1. This page will be used for reading a check number from image of check.
+{% endcomment %}
+
+{% block content %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% comment %} For Security purpose. Please don't delete {% endcomment %}
+        {% csrf_token %}
+
+        {% comment %} For uploading portion {% endcomment %}
+        <h4 class="text-center">Upload the Images</h4>
+        {% comment %} for the submit form {% endcomment %}
+   
+        <div class="image-upload-two">
+            <div class="center">
+                <div class="form-input">
+                    <label for="image"><b>1.</b>  Upload image of check:</label><br>
+                    <input type="file" class="form-control" id="image" name="image"/><br>
+                    <label for="image2"><b>2.</b>  Upload reference image for reading check:</label><br>
+                    <input type="file" class="form-control" id="image2" name="image2"/>
+                </div>
+            </div>
+    </form>      
+    <br><br>
+    <button type="submit" class="btn btn-primary btn-lg btn-block" type="submit">Start OCR</button>
+    {% comment %} End of submit form {% endcomment %}
+        
+    <br><br>
+
+    {% comment %} For previewing image {% endcomment %}
+        {% if img_obj %}
+            <h3 class="text-center">The image{{img_obj.title}}</h3>
+            <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:500px">
+        {% endif %}
+    </div>
+    {% comment %} End of previewing {% endcomment %}
+
+    <br>
+
+    {% comment %} For output {% endcomment %}
+    <div class="text-center">
+        <h3 class="text-center">The OCR results</h3>
+        <textarea class="form-control rounded-0" id="text-val" rows="20" cols="10" style="border:1px outset #000000;">
+            {{ checknumber }}
+        </textarea>  
+    </div>
+    {% comment %} End of the output {% endcomment %}
+    
+    {% comment %} Line Break before Download {% endcomment %}
+    <br>
+    <br> 
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary btn-lg" id="dwn-btn">Download .txt File</button>
+    </div>
+
+    {% comment %} Line break at the end of the document {% endcomment %}
+    <br><br>
+
+    {% comment %} End of the html file {% endcomment %}
+    </html>
+{% comment %} Javascript for document saver {% endcomment %}
+{% comment %} Please do not change unless you find better solution {% endcomment %}
+{% comment %} Make sure to move the following portion to static/js/main.js file {% endcomment %}
+<script>
+    function download(filename, text) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    }
+
+    // Start file download.
+    document.getElementById("dwn-btn").addEventListener("click", function() {
+    // Generate download of hello.txt file with some content
+    var text = document.getElementById("text-val").value;
+    // The name of the file. Can be modified by admins
+    var filename = "4O4CR.txt";
+
+    download(filename, text);
+    }, false);
+
+</script>
+{% comment %} End of JavaScript {% endcomment %}
+{% endblock %}
+</html>
