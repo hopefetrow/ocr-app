@@ -12,3 +12,9 @@ from django.db import models
 
 class Ocr(models.Model):
     image = models.ImageField(upload_to='images/')  
+
+
+# for uploading image to be read with a reference image 
+class Ocr2(models.Model):
+    image = models.ImageField(upload_to='images/')  
+    image2 = models.ImageField(upload_to='images/')  

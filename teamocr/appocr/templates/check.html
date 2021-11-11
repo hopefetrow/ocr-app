@@ -12,45 +12,43 @@
         {% csrf_token %}
 
         {% comment %} For uploading portion {% endcomment %}
-        <h4 class="text-center">Upload the Image</h4>
-        <input type="file" class="form-control" id="image" name="image" style="border:1px outset #000000;"/>
-        {% comment %} End of uploading portion {% endcomment %}
-
-        {% comment %} for line break before the submit {% endcomment %}
-        <br><br>
-
+        <h4 class="text-center">Upload the Images</h4>
         {% comment %} for the submit form {% endcomment %}
-        <div class="text-center">
-             <button type="submit" class="btn btn-primary btn-lg btn-block" type="submit">Start OCR</button>
-        </div>
-        {% comment %} End of submit form {% endcomment %}
+   
+        <div class="image-upload-two">
+            <div class="center">
+                <div class="form-input">
+                    <label for="image"><b>1.</b>  Upload image of check:</label><br>
+                    <input type="file" class="form-control" id="image" name="image"/><br>
+                    <label for="image2"><b>2.</b>  Upload reference image for reading check:</label><br>
+                    <input type="file" class="form-control" id="image2" name="image2"/>
+                </div>
+            </div>
+    </form>      
+    <br><br>
+    <button type="submit" class="btn btn-primary btn-lg btn-block" type="submit">Start OCR</button>
+    {% comment %} End of submit form {% endcomment %}
         
-    </form>
-    {% comment %} Line break before the preview {% endcomment %}
     <br><br>
 
     {% comment %} For previewing image {% endcomment %}
-    <div class="text-center">
-        {% if check_image %}
+        {% if img_obj %}
             <h3 class="text-center">The image{{img_obj.title}}</h3>
             <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:500px">
         {% endif %}
     </div>
     {% comment %} End of previewing {% endcomment %}
 
-    {% comment %} Line Break {% endcomment %}
     <br>
 
     {% comment %} For output {% endcomment %}
     <div class="text-center">
-        <h3 class="text-center">The OCR'd version</h3>
-
-        {% comment %} From views.py {% endcomment %}
+        <h3 class="text-center">The OCR results</h3>
         <textarea class="form-control rounded-0" id="text-val" rows="20" cols="10" style="border:1px outset #000000;">
             {{ checknumber }}
         </textarea>  
-         {% comment %} End of the output {% endcomment %}
     </div>
+    {% comment %} End of the output {% endcomment %}
     
     {% comment %} Line Break before Download {% endcomment %}
     <br>
@@ -64,22 +62,18 @@
     <br><br>
 
     {% comment %} End of the html file {% endcomment %}
-
+    </html>
 {% comment %} Javascript for document saver {% endcomment %}
 {% comment %} Please do not change unless you find better solution {% endcomment %}
 {% comment %} Make sure to move the following portion to static/js/main.js file {% endcomment %}
 <script>
-
     function download(filename, text) {
         var element = document.createElement('a');
         element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
         element.setAttribute('download', filename);
-
         element.style.display = 'none';
         document.body.appendChild(element);
-
         element.click();
-
         document.body.removeChild(element);
     }
 

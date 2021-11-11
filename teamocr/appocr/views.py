@@ -6,6 +6,7 @@ Please modify with care.
 from django.shortcuts import render
 from django.conf import settings 
 from .forms import ImageUpload
+from .forms import ImageUpload2
 
 # for pytesseract import 
 import pytesseract
@@ -154,19 +155,24 @@ def check(request):
     checknumber = ""
     context = dict()
     if request.method == 'POST':
-        form = ImageUpload(request.POST, request.FILES)
+        form = ImageUpload2(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             # For previewing image 
-            img_obj2 = form.instance
+            img_obj = form.instance
             image = request.FILES['image']
             image = form.cleaned_data['image']
             image = image.name 
             path = settings.MEDIA_ROOT 
-            pathz = path + '/images/' + image 
-        
-
-###################################################################
+            totalpath = (str)(path + '/images/' + image)
+            # For previewing image 
+            img_obj2 = form.instance
+            image2 = request.FILES['image2']
+            image2 = form.cleaned_data['image2']
+            image2 = image2.name 
+            refpath = settings.MEDIA_ROOT 
+            totalrefpath = (str)(refpath + '/images/' + image2)
+            #--------------------------------------------------------------
 
             # initialize the list of reference character names, in the same
             # order as they appear in the reference image where the digits
@@ -181,7 +187,8 @@ def check(request):
             # load the reference MICR image from disk, convert it to grayscale,
             # and threshold it, such that the digits appear as *white* on a
             # *black* background
-            ref = cv2.imread("appocr/static/images/micr_e13b_reference.png")
+            print(totalrefpath)
+            ref = cv2.imread(totalrefpath)
             ref = cv2.cvtColor(ref, cv2.COLOR_BGR2GRAY)
             ref = imutils.resize(ref, width=400)
             ref = cv2.threshold(ref, 0, 255, cv2.THRESH_BINARY_INV |
@@ -196,8 +203,7 @@ def check(request):
 
             # extract the digits and symbols from the list of contours, then
             # initialize a dictionary to map the character name to the ROI
-            refROIs = extract_digits_and_symbols(ref, refCnts,
-                minW=10, minH=20)[0]
+            refROIs = extract_digits_and_symbols(ref, refCnts, minW=10, minH=20)[0]
             chars = {}
 
             # loop over the reference ROIs
@@ -215,10 +221,11 @@ def check(request):
             # load the input image, grab its dimensions, and apply array slicing
             # to keep only the bottom 20% of the image (that's where the account
             # information is)
-            check_img = cv2.imread("appocr/static/images/example_check.png")
-            (h, w,) = check_img.shape[:2]
+            print((str)(path + '/images/' + image))
+            img = cv2.imread(totalpath)
+            (h, w,) = img.shape[:2]
             delta = int(h - (h * 0.2))
-            bottom = check_img[delta:h, 0:w]
+            bottom = img[delta:h, 0:w]
 
             # convert the bottom image to grayscale, then apply a blackhat
             # morphological operator to find dark regions against a light
@@ -228,8 +235,7 @@ def check(request):
 
             # compute the Scharr gradient of the blackhat image, then scale
             # the rest back into the range [0, 255]
-            gradX = cv2.Sobel(blackhat, ddepth=cv2.CV_32F, dx=1, dy=0,
-                ksize=-1)
+            gradX = cv2.Sobel(blackhat, ddepth=cv2.CV_32F, dx=1, dy=0, ksize=-1)
             gradX = np.absolute(gradX)
             (minVal, maxVal) = (np.min(gradX), np.max(gradX))
             gradX = (255 * ((gradX - minVal) / (maxVal - minVal)))
@@ -317,9 +323,9 @@ def check(request):
 
                 # draw (padded) bounding box surrounding the group along with
                 # the OCR output of the group
-                cv2.rectangle(check_img, (gX - 10, gY + delta - 10),
+                cv2.rectangle(img, (gX - 10, gY + delta - 10),
                     (gX + gW + 10, gY + gY + delta), (0, 0, 255), 2)
-                cv2.putText(check_img, "".join(groupOutput),
+                cv2.putText(img, "".join(groupOutput),
                     (gX - 10, gY + delta - 25), cv2.FONT_HERSHEY_SIMPLEX,
                     0.95, (0, 0, 255), 3)
 
@@ -333,7 +339,7 @@ def check(request):
     
             context = {
                 'checknumber': checknumber,
-                'img_obj': image
+                'img_obj': img_obj
             }   
             return render(request, 'check.html', context)
-    return render(request, 'check.html', {'checknumber':"checknumber"})
+    return render(request, 'check.html', context)
