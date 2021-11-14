@@ -14,6 +14,10 @@ teamocr/teamocr/__pycache__/settings.cpython-39.pyc
 teamocr/teamocr/__pycache__/urls.cpython-39.pyc
 teamocr/teamocr/__pycache__/wsgi.cpython-39.pyc
 env/lib/python3.9/site-packages/cv2/__init__.py
+teamocr/appocr/static/.DS_Store
+teamocr/appocr/static/images/.DS_Store
 
 
 
+teamocr/appocr/static/images/powerpoints/~$Project_Presentation.pptx
+teamocr/appocr/static/images/powerpoints/Project_Presentation.pptx

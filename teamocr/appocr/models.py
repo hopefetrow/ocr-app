@@ -18,3 +18,7 @@ class Ocr(models.Model):
 class Ocr2(models.Model):
     image = models.ImageField(upload_to='images/')  
     image2 = models.ImageField(upload_to='images/')  
+
+# For license uploading  
+class license(models.Model):
+    image = models.ImageField(upload_to='images/') 

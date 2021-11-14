@@ -2,69 +2,74 @@
 
 {% block content %}
 
-<label class="form-label" for="customFile">Upload the Image</label>
-<input type="file" class="form-control" id="customFile" />
-<br><br>
+  <div class="row">
+    <div class="col">
+      <form method="post" enctype="multipart/form-data">
+        {% comment %} For Security purpose. Please don't delete {% endcomment %}
+        {% csrf_token %}
 
-<h3 style="text-align:center"> Or fill out manually </h3>
+        {% comment %} For uploading portion {% endcomment %}
+        <h3 class="text-center">Upload the License</h3>
+        <br>
+        <input type="file" class="form-control" id="image" name="image" style="border:1px outset #000000;"/>
+        {% comment %} End of uploading portion {% endcomment %}
 
-<br><br>
+        {% comment %} for line break before the submit {% endcomment %}
+        <br><br>
 
-<form method="post" action="{% url 'license' %}">
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">First Name</label>
-      <input type="email" class="form-control" id="inputEmail4" placeholder="First Name">
+        {% comment %} for the submit form {% endcomment %}
+        <div class="text-center">
+             <button type="submit" class="btn btn-primary btn-lg btn-block" type="submit">Start OCR</button>
+        </div>
+        {% comment %} End of submit form {% endcomment %}
+        
+      </form>
+    <br>  
+      <div class="text-center">
+          {% if img_obj %}
+              <h3 class="text-center">The License{{img_obj.title}}</h3>
+              <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">
+          {% endif %}
+      </div> 
     </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Last Name</label>
-      <input type="password" class="form-control" id="inputPassword4" placeholder="Last Name">
+    <div class="col">
+      <div class="text-center">
+        <h3 class="text-center">The OCR'd version</h3>
+
+        {% comment %} From views.py {% endcomment %}
+
+        {% comment %} For output {% endcomment %}
+        <div class="form-group">
+            <label for="exampleInputPassword1" style="color:blue;">Full Name</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Full Name" value="{{ full_name }}">
+        </div> 
+        <div class="form-group">
+            <label for="exampleInputPassword1" style="color:blue;">DOB</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="DOB" value="{{ dob }}">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1" style="color:blue;">Address</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Address" value="{{ address }}">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1" style="color:blue;">State</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="State" value={{ state }}>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1" style="color:blue;">License No.</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="License No." value={{ license }}>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1" style="color:blue;">Issue Date</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Issued" value={{ issue_date }}>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1" style="color:blue;">Expiration Date</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Expiration" value={{ expiry_date }}>
+        </div>
+         {% comment %} End of the output {% endcomment %}
+      </div>
     </div>
   </div>
-  <div class="form-group">
-    <label for="inputAddress">Address</label>
-    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-  </div>
-  <div class="form-group">
-    <label for="inputAddress2">Address 2</label>
-    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-      <label for="inputCity">City</label>
-      <input type="text" class="form-control" id="inputCity">
-    </div>
-    <div class="form-group col-md-4">
-      <label for="inputState">State</label>
-      <select id="inputState" class="form-control">
-        <option selected>Choose...</option>
-        <option>...</option>
-      </select>
-    </div>
-    <div class="form-group col-md-2">
-      <label for="inputZip">Zip</label>
-      <input type="text" class="form-control" id="inputZip">
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="gridCheck">
-      <label class="form-check-label" for="gridCheck">
-        Check me out
-      </label>
-    </div>
-  </div>
-  <button type="submit" class="btn btn-primary">Sign in</button>
-</form>
 
-{% for x in text %}
-    <h3>{{ x }}</h3>
-{% endfor %}
-<!-- Don't care -->
-<!-- <h1> Output </h1>
-
-{% for items in test %}
-    <h3>{{ items }}</h3>
-{% endfor %} -->
-<!-- End of Don't care -->
 {% endblock %}

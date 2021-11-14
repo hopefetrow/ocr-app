@@ -1,6 +1,6 @@
 from django import forms
-from .models import Ocr 
-from .models import Ocr2 
+from .models import Ocr, Ocr2, license 
+# from .models import Ocr2 
 class ImageUpload(forms.ModelForm):
    class Meta:
        model = Ocr 
@@ -14,3 +14,9 @@ class ImageUpload2(forms.ModelForm):
        model = Ocr2 
     #    The field names should be same as database fieldnames
        fields = ['image','image2']
+
+
+class LicenseImage(forms.ModelForm):
+   class Meta:
+      model = license
+      fields = ['image']

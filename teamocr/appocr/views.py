@@ -5,8 +5,8 @@ Please modify with care.
 """
 from django.shortcuts import render
 from django.conf import settings 
-from .forms import ImageUpload
-from .forms import ImageUpload2
+from .forms import ImageUpload, ImageUpload2, LicenseImage
+# from .forms import ImageUpload2
 
 # for pytesseract import 
 import pytesseract
@@ -23,7 +23,9 @@ from skimage.segmentation import clear_border
 from imutils import contours
 import imutils
 import numpy as np
-
+# Free Trial Api
+import idanalyzer
+# Free Trial Api
 # Create your views here.
 
 # For the home views
@@ -62,35 +64,70 @@ def textConversions(request):
 
 
 # For the license reader views 
+"""
+Please don't use this below more than 5 times 
+I am using free api for this. 
+
+"""
 def license(request):
-  
-    def cleanup_text(text):
-	# strip out non-ASCII text so we can draw the text on the image
-	# using OpenCV
-	    return "".join([c if ord(c) < 128 else "" for c in text]).strip()
+    coreapi = idanalyzer.CoreAPI("A1KZSQjcLv8qoCbSRumHafArTQvEHCQu", "US")
+    coreapi.restrict_type("DI")
 
-    image = cv2.imread("../license_5.jpg")
 
-    reader = Reader(['en'], gpu=True)
-    results = reader.readtext(image)
-        
-        # loop over the results
+    full_name = ''
+    dob = ''
+    address = ''
+    state = ''
+    license = ''
+    issue_date = ''
+    expiry_date = ''
+    context = dict()
 
-    # The text1 is a empty list which will be appended
-    text1 = list()
-    for (bbox, text, prob) in results:
-        clean_txt = cleanup_text(text)
-        text1.append(clean_txt)
-       
-    return render(request, 'license.html', {'text':text1})
+    if request.method == "POST":
+        form = LicenseImage(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            img_obj = form.instance
+            image = form.cleaned_data['image']
+            image = image.name 
+            path = settings.MEDIA_ROOT 
+            pathz = path + '/images/' + image 
 
+            # response = coreapi.scan(document_primary="/Users/sumitbarua/Documents/CS5820Project/teamocr/appocr/static/images/license_2.jpg")
+            response = coreapi.scan(document_primary= pathz)
+
+            if response.get('result'):
+                data_result = response['result']
+
+                full_name = data_result['firstName'] + " " + data_result['lastName']
+                dob = data_result['dob']
+                address = data_result['address1'] + " " + data_result['address2']
+                state = data_result['issuerOrg_region_full']
+                license = data_result['documentNumber']
+                issue_date = data_result['issued']
+                expiry_date = data_result['expiry']
+
+                context = {
+                    'full_name': full_name,
+                    'dob': dob,
+                    'address': address,
+                    'state': state,
+                    'license': license,
+                    'issue_date': issue_date,
+                    'expiry_date': expiry_date,
+                    'img_obj': img_obj
+                }
+            return render(request, 'license.html', context)
+    return render(request, 'license.html', context)
+
+# End of License
 
 # For testing purposes only
 def test(request):
     return render(request, 'test.html', {})
 # Please delete the above function for code efficiency and final deployment
 
-
+# Start of check OCR
 def check(request): 
     def extract_digits_and_symbols(image, charCnts, minW=5, minH=15):
         # grab the internal Python iterator for the list of character
@@ -343,3 +380,6 @@ def check(request):
             }   
             return render(request, 'check.html', context)
     return render(request, 'check.html', context)
+
+# End of Check 
+# End of the document   
