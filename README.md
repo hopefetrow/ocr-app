@@ -16,7 +16,6 @@ The OCR or Optical Character Recognition is a process by which we can extract th
 <h2> Features </h2>
 <ul>
  <li> Interface for general text extraction and .txt/.doc conversion</li>
- <li> An automated form filling interface from Driving License/I.D.</li>
  <li> An interface for check information retrieval.</li>
 </ul>
 
