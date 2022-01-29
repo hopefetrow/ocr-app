@@ -11,7 +11,7 @@ To learn about the functionality of the OCR process and demonstrate the practica
 
 <h2> Description </h2>
 
-The OCR or Optical Character Recognition is a process by which we can extract the written or printed texts in an image to actual text or string using A.I. document parsing method. This project presents the basic functionality of the OCR process, where a user can extract the text from an image and download as a .txt file or extract the check info printed at the bottom of a bank check, a key action in bank check processing. This presents the usefulness and efficiency of OCR. 
+The OCR or Optical Character Recognition is a process by which we can extract the written or printed texts in an image to actual text or string using A.I. document parsing method. This project presents some basic functionality of the OCR process, where a user can extract the text from an image and download as a .txt file or extract the check info printed at the bottom of a bank check, a key action in bank check processing which displays the usefulness and efficiency of OCR. 
 		
 <h2> Features </h2>
 <ul>
@@ -20,21 +20,31 @@ The OCR or Optical Character Recognition is a process by which we can extract th
  <li> An interface for check information retrieval.</li>
 </ul>
 
+<h2> Technologies used </h2>
+<ul>
+	<li>Python</li>
+	<li>Django</li>
+	<li>Tesseract</li>
+	<li>OpenCV</li>
+	<li>imutils</li>
+	<li>sci-kit image</li>
+	<li>NumPy</li>
+</ul>
+
 <h2> Installation </h2>
-
-For virtualenv to install all files in the requirements.txt file:
-	<ul>
-	<li>cd to the directory where requirements.txt is located</li>
-	<li>activate your virtualenv</li>
-	<li>run: pip install -r requirements.txt in your shell</li>
-	</ul>
-
-To start server and open web app:
-	<ul>
-	<li>cd into the directory with manage.py </li>
-	<li>run: python manage.py runserver </li>
-	<li>open link that appears in terminal </li>
-	</ul>
+1. Create a project directory using: "mkdir your_directory_name" <br>
+2. Either unzip the ‘OCRWebApp’ folder or clone it from GitHub using: "git clone https://github.com/hopefetrow/OCRWebApp.git" <br>
+3. Install virtual environment in the same directory using: "python -m venv env" <br>
+4. Activate the virtual environment using: "source env/bin/activate <br>
+5. Change the directory to ‘teamocr’ using: "cd teamocr" <br>
+6. Install the dependencies using: "pip install -r requirements.txt" <br>
+7. Run the program using: "python manage.py runserver" <br>
 		
 <h2>Developers </h2>   	
 	Hope Fetrow and Sumit Barua
+
+<h2>What I learned</h2>
+<ul>
+	<li>How to build a basic web app with Django and Python</li>
+	<li>How to apply back check OCR to images using OpenCV, Python, and template matching</li>
+</ul>
