@@ -22,15 +22,19 @@ The OCR or Optical Character Recognition is a process by which we can extract th
 
 <h2> Installation </h2>
 
-For virtualenv to install all files in the requirements.txt file.
+For virtualenv to install all files in the requirements.txt file:
+	<ul>
+	<li>cd to the directory where requirements.txt is located</li>
+	<li>activate your virtualenv</li>
+	<li>run: pip install -r requirements.txt in your shell</li>
+	</ul>
 
-cd to the directory where requirements.txt is located
-activate your virtualenv
-run: pip install -r requirements.txt in your shell
-	
-cd into the directory with manage.py 
-run: python manage.py runserver 
-open link that appears in terminal 
-
+To start server and open web app:
+	<ul>
+	<li>cd into the directory with manage.py </li>
+	<li>run: python manage.py runserver </li>
+	<li>open link that appears in terminal </li>
+	</ul>
+		
 <h2>Developers </h2>   	
 	Hope Fetrow and Sumit Barua
