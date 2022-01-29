@@ -45,5 +45,5 @@ The OCR or Optical Character Recognition is a process by which we can extract th
 <h2>What I learned</h2>
 <ul>
 	<li>How to build a basic web app with Django and Python</li>
-	<li>How to apply back check OCR to images using OpenCV, Python, and template matching</li>
+	<li>How to apply bank check OCR to images using OpenCV, Python, and template matching</li>
 </ul>
