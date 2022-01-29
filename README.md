@@ -11,7 +11,7 @@ To learn about the functionality of the OCR process and demonstrate the practica
 
 <h2> Description </h2>
 
-The OCR or Optical Character Recognition is a process by which we can extract the written or printed texts in an image to actual text or string using A.I. document parsing method. This project displays the basic functionality of the OCR process, where a user can extract the text from an image and download as a .txt file or extract the check info printed at the bottom of a bank check, a key action in bank check processing. This presents the usefulness and efficiency of OCR. 
+The OCR or Optical Character Recognition is a process by which we can extract the written or printed texts in an image to actual text or string using A.I. document parsing method. This project presents the basic functionality of the OCR process, where a user can extract the text from an image and download as a .txt file or extract the check info printed at the bottom of a bank check, a key action in bank check processing. This presents the usefulness and efficiency of OCR. 
 		
 <h2> Features </h2>
 <ul>
