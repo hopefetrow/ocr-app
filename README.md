@@ -23,6 +23,9 @@ The OCR or Optical Character Recognition is a process by which we can extract th
 <ul>
 	<li>Python</li>
 	<li>Django</li>
+	<li>HTML</li>
+	<li>CSS</li>
+	<li>JavaScript</li>
 	<li>Tesseract</li>
 	<li>OpenCV</li>
 	<li>imutils</li>
