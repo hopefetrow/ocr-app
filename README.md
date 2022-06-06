@@ -18,7 +18,7 @@ A user can extract text from any standard image and download the extracted text 
 <h2> Features </h2>
 <ul>
  <li> Interface for general text extraction and .txt conversion</li>
- <li> An interface for check information retrieval.</li>
+ <li> Interface for check information retrieval</li>
 </ul>
 
 <h2> Technologies used </h2>
